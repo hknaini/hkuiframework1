@@ -1,0 +1,33 @@
+{
+  "name": "hkuiframework1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "client-install": "npm install --prefix client ",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\" "
+  },
+  "dependencies": {
+    "archiver": "^3.1.1",
+    "body-parser": "^1.19.0",
+    "concurrently": "^4.1.2",
+    "config": "^3.2.2",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hknaini/hkuiframework1.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hknaini/hkuiframework1/issues"
+  },
+  "homepage": "https://github.com/hknaini/hkuiframework1#readme"
+}
