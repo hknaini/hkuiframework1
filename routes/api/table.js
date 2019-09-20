@@ -1,4 +1,4 @@
-import React, { Component } from react
+import React, { Component } from 'react'
 import Hkreacttable from 'hktestnpmone';
 
 class App extends Component {

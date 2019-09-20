@@ -10,21 +10,28 @@ var cmd = require("node-command-line");
 const Promise = require("bluebird");
 
 router.get("/zipdata", (req, res) => {
-  const dirname = "testuif2";
+  const dirname = "testuif5";
   const homedir = os.homedir();
   console.log(homedir);
   // `homedir()` returns absolute path so we use `join` here
-  fs.mkdir(require('path').join(homedir,dirname ));
+  //fs.mkdir(require('path').join(homedir,dirname ));
 
-  process.chdir("C:\\Users\\himanshu.kandpal\\testuif1");
+  process.chdir("C:\\Users\\himanshu.kandpal\\testuif5");
   console.log(__dirname);
   //cmd.run('npm install');
   //console.log('Executed your command :)');
-
+   
   //Promise.coroutine(function*() {
   //  console.log("Installing React)");
    // yield cmd.run("create-react-app .");
-    console.log("Installed React)");
+   cmd.run('create-react-app .');
+   
+   setTimeout(function() {
+    console.log("Installed React");
+    cmd.run('npm install hktestnpmone');
+    setTimeout(function() {
+      
+    
 
     var output = fs.createWriteStream(
       homedir + "/" + dirname + "/rexample.zip"
@@ -69,17 +76,25 @@ router.get("/zipdata", (req, res) => {
       }
     ); 
 
-    //fs.renameSync(homedir + "\\" + dirname + "\\src\\App.js",
-    //homedir + "\\" + dirname + "\\src\\OldApp.js");
-
-    //fs.copyFileSync(homedir + "\\" + dirname + "\\table.js", homedir + "\\" + dirname + "\\src\\App.js"); 
+    
 
 
     //fs.unlinkSync(homedir + '\\'+dirname+'\\rexample.zip')
-    cmd.run('npm install hktestnpmone');
-    cmd.run('npm run start');
 
+   // cmd.run('npm install hktestnpmone');
+    setTimeout(function() {
+        cmd.run('npm run start');
+        fs.renameSync(homedir + "\\" + dirname + "\\src\\App.js",
+    homedir + "\\" + dirname + "\\src\\OldApp.js");
+
+    fs.copyFileSync(homedir + "\\" + dirname + "\\table.js", homedir + "\\" + dirname + "\\src\\App.js"); 
+    cmd.run('npm run start');
     res.send();
+      }, 30000);
+    
+    }, 60000);
+    
+}, 600000); 
   });
 //});
 
