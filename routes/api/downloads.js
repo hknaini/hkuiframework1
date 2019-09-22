@@ -9,14 +9,14 @@ var extract = require("extract-zip");
 var cmd = require("node-command-line");
 const Promise = require("bluebird");
 
-router.get("/zipdata", (req, res) => {
-  const dirname = "testuif5";
+router.get("/zipdata", (req, res) => { 
+  const dirname = "testuif8";
   const homedir = os.homedir();
   console.log(homedir);
   // `homedir()` returns absolute path so we use `join` here
   //fs.mkdir(require('path').join(homedir,dirname ));
 
-  process.chdir("C:\\Users\\himanshu.kandpal\\testuif5");
+  process.chdir("C:\\Users\\kandp\\testuif8"); 
   console.log(__dirname);
   //cmd.run('npm install');
   //console.log('Executed your command :)');
@@ -24,6 +24,7 @@ router.get("/zipdata", (req, res) => {
   //Promise.coroutine(function*() {
   //  console.log("Installing React)");
    // yield cmd.run("create-react-app .");
+   console.log("Installing React");
    cmd.run('create-react-app .');
    
    setTimeout(function() {
@@ -94,7 +95,7 @@ router.get("/zipdata", (req, res) => {
     
     }, 60000);
     
-}, 600000); 
+}, 300000); 
   });
 //});
 
