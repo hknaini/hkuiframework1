@@ -6,14 +6,23 @@ class App extends Component {
   state = {
     table: false,
     f4ip: false,
-    input: false
+    input: false,
+    tableColumns : ['Student ID', 'NAME' , 'AGE' , 'EMAIL' ,'WORK', 'OLA'],
+    tableAttributesData : [ 'id', 'name', 'age' , 'emailid' , 'work' , 'ola'],
+    tableData  : [{selected : false , value : ''}, {selected : false , value : ''},
+                  {selected : false , value : ''}, {selected : false , value : ''}, {selected : false , value : ''}, {selected : false , value : ''}]
+
+
   };
 
   getReactTable = () => {
     window.open(
       `http://localhost:5000/api/downloads/zipdata?table=${this.state.table}&&f4ip=${this.state.f4ip}&&ip=${this.state.input}`
-    );
-    // window.open('http://localhost:5000/api/downloads/zipdata?v1=23&&v2=33');
+    ); 
+
+   /*  window.open(
+      `http://localhost:5000/api/downloads/zipdatanew`
+    ); */
   };
 
   handleSubmit = e => {
@@ -29,7 +38,89 @@ class App extends Component {
       [id]: e.target.checked
     });
   };
+
+  createServiceList1 = ()=>{
+    const tableColumns = ['Student ID', 'NAME' , 'AGE' , 'EMAIL' ,'WORK', 'OLA'];
+    tableColumns.map((tableColumn, index) =>{
+      return(
+        <li>
+        <input type="checkbox" checked={false}/>
+        <input type="text"/>
+        </li>
+      )
+
+    }
+    )
+
+  }
+
+  handleListChange =(index , value)=>{
+      let oldTableData = [... this.state.tableData ]
+      oldTableData[index].selected = value ;
+     // oldTableData[0].value = 'event.target.checked' ;
+      this.setState({
+        tableData : oldTableData 
+      }
+      )
+      //console.log("gl");
+  }
+
+  handleListIPChange =(index , value)=>{
+    let oldTableData = [... this.state.tableData ]
+    oldTableData[index].value = value ;
+   // oldTableData[0].value = 'event.target.checked' ;
+    this.setState({
+      tableData : oldTableData 
+    }
+    )
+    //console.log("gl");
+}
+
+   allitems = function(){
+    this.state.tableColumns.map(function(item , index){
+    return(
+      <li>
+      
+      <input type="checkbox" checked={true}/>
+      <input type="text" value={item}/>
+      </li>
+    )
+
+  });
+}
+
+
+
   render() {
+    const tableColumns = ['Student ID', 'NAME' , 'AGE' , 'EMAIL' ,'WORK', 'OLA'];
+    const tableAttributesData= [... this.state.tableAttributesData];
+    const tableData= [... this.state.tableData];
+   // console.log(tableData);
+    const that = this ;
+    //console.log(that.state.tableData[0].selected)
+    const items = this.state.tableColumns.map((item , index)=>{
+      //console.log(index);
+      return(
+        <li>
+         {this.state.tableAttributesData[index]}
+        
+         <input type="checkbox" onChange={ (event) => {
+
+           this.handleListChange(index , event.target.checked)
+         }
+           } 
+           checked={this.state.tableData[index].selected}/>
+        <input type="text" 
+        value={this.state.tableData[index].value}
+        onChange={ (event) => {
+        this.handleListIPChange(index , event.target.value)}
+        }
+        />
+        </li>
+      )
+
+    }); 
+
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
@@ -63,6 +154,19 @@ class App extends Component {
           />
         </div>
 
+
+        <label>
+          Pick the service for binding:
+          <select>
+          <option value="0">Pick a service</option>
+            <option value="1">S1_USR_MAINT</option>
+            <option value="2">S1_WRH_MAINT</option>
+          </select>
+        </label>
+
+        <ul>
+          {items}
+        </ul> 
         <button>Submit</button>
       </form>
     );

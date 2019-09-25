@@ -15,7 +15,7 @@ class App extends Component {
             { id: 4, name: 'Bindu', age: 225, emailid: 'Bindu@email.com' , work : 'WRK4' , ola: "OLA4"}  ,
             { id: 5, name: 'Bindu', age: 2254, emailid: 'HBindu@email.com' , work : 'WRK5' , ola: "OLA5"}  
          ]
-        } height={150} color="red" text="Hello World!" />
+        }/>
     );
   }
 }
