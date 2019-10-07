@@ -9,16 +9,26 @@ var extract = require("extract-zip");
 var cmd = require("node-command-line");
 const Promise = require("bluebird");
 
+let finalData = "";
+
 router.get("/zipdata", (req, res) => { 
   console.log(req.query);
-  const dirname = "testuif9";
+  const dirname = "testuif10";
   const homedir = os.homedir();
   console.log(homedir);
   // `homedir()` returns absolute path so we use `join` here
   //fs.mkdir(require('path').join(homedir,dirname ));
 
-  process.chdir("C:\\Users\\himanshu.kandpal\\testuif9"); 
-  console.log(__dirname);
+  /* process.chdir("C:\\Users\\himanshu.kandpal\\testuif10"); 
+  res.setHeader('Content-disposition', 'attachment; filename=theDocument.json');
+  res.charset = 'UTF-8';
+
+  res.write(finalData);
+    //dirname = "testuif10";
+   //const homedir = os.homedir(); 
+    res.download('C:\\Users\\himanshu.kandpal\\testuif10', 'temptable.js');
+    res.send();
+  console.log(__dirname); */
   //cmd.run('npm install');
   //console.log('Executed your command :)');
    
@@ -26,7 +36,7 @@ router.get("/zipdata", (req, res) => {
   //  console.log("Installing React)");
    // yield cmd.run("create-react-app .");
    console.log("Installing React");
-   cmd.run('create-react-app .');
+   ///cmd.run('create-react-app .');
    
    setTimeout(function() {
     console.log("Installed React");
@@ -67,7 +77,15 @@ router.get("/zipdata", (req, res) => {
     //console.log(__dirname);
     var file2 = __dirname + "/pkg.json";
     archive.append(fs.createReadStream(file2), { name: "pkg.json" });
+
+    archive.append(finalData, { name: 'cheese.js' });
     archive.finalize();
+
+    /* res.write(finalData);
+    dirname = "testuif10";
+   //const homedir = os.homedir(); 
+    res.download(homedir + "\\" + dirname, 'temptable.js');
+    res.send();  */
 
      extract(
       homedir + "\\" + dirname + "\\rexample.zip",
@@ -94,14 +112,31 @@ router.get("/zipdata", (req, res) => {
     res.send();
       }, 30000);
     
-    }, 60000);
+    }, 60);
     
-}, 300000); 
+}, 30); 
   });
 //});
 
-router.get("/zipdatanew", (req, res) => {
-  const dirname = "testuif1";
+router.post("/zipdatanew", (req, res) => {
+  
+  let sTableCols =  "tableColumns = {['" ;
+  //console.log(req.body.uiState.tableData) ;
+   req.body.uiState.tableData.forEach(function(val,index) { 
+    if(val.selected === true){
+    //console.log(val.value) ;
+    //if( index !== req.body.uiState.tableData.length - 1)
+    sTableCols = sTableCols + val.value + "','" ;
+    
+    /* else{
+      console.log(val)
+      sTableCols = sTableCols + val.value + "']}" ;
+    } */
+  }
+ }) ; 
+ sTableCols =  sTableCols.substring(0, sTableCols.length - 2) + "]}";
+ console.log("final..." , sTableCols);
+  let dirname = "testuif1";
   const homedir = os.homedir();
   console.log(__dirname);
   var fs = require('fs')
@@ -114,9 +149,9 @@ router.get("/zipdatanew", (req, res) => {
   const rt5 = "return ("
   const rt6="<Hkreacttable" 
   const stdID = 'Student ID'
-  const dataText1 = 
-          "tableColumns = {['"+stdID +"', 'NAME' , 'AGE' , 'EMAIL' ,'WORK', 'OLA']}"
-  const dataText2 = "tableColumnTypes = {['txt','btn','ip','txt','ip','txts']}"
+  const dataText1 = sTableCols ;
+        //  "tableColumns = {['"+stdID +"', 'NAME' , 'AGE' , 'EMAIL' ,'WORK', 'OLA']}"
+  const dataText2 = "tableColumnTypes = {['txt','txt','txt','txt','txt','txt']}"
   const dataText3 = "tableData={"
   const dataText4 ="["
   const mainData =  "{ id: 1, name: 'Himanshu', age: 221, emailid: 'Himanshu@email.com' , work : 'WRK1' , ola: 'OLA1'},{ id: 2, name: 'Pavan', age: 129, emailid: 'Pavan@email.com' , work : 'WRK2' , ola: 'OLA2'},{ id: 3, name: 'Anshul', age: 126, emailid: 'Anshul@email.com', work : 'WRK3' , ola: 'OLA3' }"
@@ -132,9 +167,20 @@ router.get("/zipdatanew", (req, res) => {
   const rt11="export default App"
 
 
-  const finalData = rt1 + "\n" + rt2 + "\n" + rt3 + "\n" + rt4 + "\n" + rt5 + "\n" + rt6 + "\n" + dataText1 + "\n" +
+   finalData = rt1 + "\n" + rt2 + "\n" + rt3 + "\n" + rt4 + "\n" + rt5 + "\n" + rt6 + "\n" + dataText1 + "\n" +
    dataText2 + "\n" + dataText3 + "\n" + dataText4 + "\n" + mainData + "\n" + dataText5 + "\n" + dataText6 + "\n" +rt7 + "\n" + rt8 + "\n" + rt9 + "\n" + rt10 + "\n" + rt11 ;
-  fs.appendFile(__dirname+'\\temptable.js', finalData , function (err) {
+
+   //res.write(finalData);
+
+   //dirname = "testuif10";
+   //const homedir = os.homedir(); 
+    //res.download(homedir + "\\" + dirname, 'temptable.js');
+    //res.send(); 
+   /* if (fs.existsSync(__dirname+'\\temptable.js')) {
+    //file exists
+    fs.unlinkSync(__dirname+'\\temptable.js')
+  } */
+   /* fs.appendFile(__dirname+'\\temptable.js', finalData , function (err) {
   if (err) {
     // append failed
     console.log(err)
@@ -142,9 +188,9 @@ router.get("/zipdatanew", (req, res) => {
     // done
     console.log('Doneee')
   }
-})
+}) */
 
-  res.send();
+  res.send("Files created");
 });
 
 module.exports = router;

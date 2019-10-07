@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import axios from "axios";
+
 
 class App extends Component {
   state = {
@@ -16,9 +18,25 @@ class App extends Component {
   };
 
   getReactTable = () => {
-    window.open(
-      `http://localhost:5000/api/downloads/zipdata?table=${this.state.table}&&f4ip=${this.state.f4ip}&&ip=${this.state.input}`
-    ); 
+    let that = this ;
+    axios.post('http://localhost:5000/api/downloads/zipdatanew', {
+     uiState : this.state 
+    })
+    .then(function (response) {
+      console.log(response, ' ho gaya');
+       window.open(
+       // `http://localhost:5000/api/downloads/zipdata?table=${that.state.table}&&f4ip=${that.state.f4ip}&&ip=${that.state.input}`
+        `http://localhost:5000/api/downloads/zipdata?table=true&&f4ip=true&&ip=true`
+      );  
+      
+    })
+    .catch(function (error) {
+      console.log(' ho gaya errrrrrrrrrrrrr');
+      console.log(error);
+    });
+
+
+    
 
    /*  window.open(
       `http://localhost:5000/api/downloads/zipdatanew`
